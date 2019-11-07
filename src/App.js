@@ -174,15 +174,32 @@ const rates = {
 function App() {
   const [baseValue, setBaseValue] = useState("");
   const [finalValue, setFinalValue] = useState("");
+  const [baseCurrency, setBaseCurrency] = useState("");
+  const [finalCurrency, setFinalCurrency] = useState("");
 
-  const handleChange = event => {
-    setFinalValue((baseValue * rates.USD).toFixed(2));
+  const handleChangeB2F = event => {
+    setFinalValue(
+      (baseValue * (rates[baseCurrency] / rates[finalCurrency])).toFixed(2)
+    );
     event.preventDefault();
   };
+  const handleChangeF2B = event => {
+    setBaseValue(
+      (finalValue * (rates[finalCurrency] / rates[baseCurrency])).toFixed(2)
+    );
+    event.preventDefault();
+  };
+  const handleBaseCurrency = event => {
+    setBaseCurrency(event.target.value);
+  };
+  const handleFinalCurrency = event => {
+    setFinalCurrency(event.target.value);
+  };
+
   return (
     <div>
-      <form onSubmit={handleChange}>
-        <h1>EUR to USD</h1>
+      <form>
+        <h1>Currency Converter</h1>
         <p>
           <input
             type="text"
@@ -192,33 +209,72 @@ function App() {
               setBaseValue(event.target.value);
             }}
           />{" "}
-          €
-        </p>
-        <button type="submit" value="">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="29"
-            height="29"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#000000"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+          <select
+            className="base-to-final-currency"
+            onChange={handleBaseCurrency}
           >
-            <path d="M12 5v13M5 12l7 7 7-7" />
-          </svg>
-        </button>
+            {Object.keys(rates).map(currency => {
+              return (
+                <option value={currency} id={currency}>
+                  {currency}
+                </option>
+              );
+            })}
+          </select>
+        </p>
+        <div>
+          <button type="submit" value="" onClick={handleChangeB2F}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000000"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 5v13M5 12l7 7 7-7" />
+            </svg>
+          </button>
+          <button type="submit" value="" onClick={handleChangeF2B}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000000"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 19V6M5 12l7-7 7 7" />
+            </svg>
+          </button>
+        </div>
         <p>
           <input
             type="text"
             name="finalCurrency"
             value={finalValue}
-            // onChange={event => {
-            //   setFinalValue(event.target.value);
-            // }}
+            onChange={event => {
+              setFinalValue(event.target.value);
+            }}
           />{" "}
-          $
+          <select
+            className="final-to-base-currency"
+            onChange={handleFinalCurrency}
+          >
+            {Object.keys(rates).map(currency => {
+              return (
+                <option value={currency} id={currency}>
+                  {currency}
+                </option>
+              );
+            })}
+          </select>
         </p>
       </form>
     </div>

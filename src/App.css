@@ -8,10 +8,21 @@ form {
 form * {
   margin: 10px;
 }
-
+button {
+  height: 7vh;
+  border-radius: 5px;
+  border: solid 1px lightgrey;
+}
 input {
   width: 30vw;
   height: 4vh;
+  border-radius: 5px;
+  border: solid 1px lightgrey;
+}
+
+select {
+  margin: -10px;
+  height: 4.5vh;
   border-radius: 5px;
   border: solid 1px lightgrey;
 }
