@@ -1,0 +1,17 @@
+form {
+  height: 50vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+form * {
+  margin: 10px;
+}
+
+input {
+  width: 30vw;
+  height: 4vh;
+  border-radius: 5px;
+  border: solid 1px lightgrey;
+}
